@@ -7,7 +7,10 @@ export function getApiErrorMessage(error: unknown): string {
   }
   const data = error.response?.data;
   if (data && typeof data === "object") {
-    if ("error" in data && typeof (data as { error: unknown }).error === "string") {
+    if (
+      "error" in data &&
+      typeof (data as { error: unknown }).error === "string"
+    ) {
       return (data as { error: string }).error;
     }
     const detail = (data as { detail?: unknown }).detail;

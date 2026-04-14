@@ -1,8 +1,5 @@
 import api from "@/config/axios";
-import {
-  loginFormSchema,
-  userSchema,
-} from "@/schemas/User";
+import { loginFormSchema, userSchema } from "@/schemas/User";
 import type { LoginForm, RegisterForm, User } from "@/types/user";
 
 /** POST /auth/login */

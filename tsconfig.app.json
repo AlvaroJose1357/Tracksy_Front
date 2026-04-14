@@ -7,10 +7,9 @@
     "module": "ESNext",
     "skipLibCheck": true,
 
-    /* Paths */
-    "baseUrl": "./",
+    /* Paths (relative to this config file; baseUrl deprecated in TS 6+) */
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     },
 
     /* Bundler mode */
