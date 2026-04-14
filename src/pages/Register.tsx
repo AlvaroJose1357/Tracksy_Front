@@ -21,13 +21,10 @@ export default function Register() {
 
   const {
     register,
-    watch,
     reset,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<RegisterForm>({ defaultValues: initialValues });
-
-  const watchPassword = watch("password");
 
   const onSubmit = async (formData: RegisterForm) => {
     try {
@@ -139,8 +136,9 @@ export default function Register() {
                 value: 8,
                 message: "La contraseña debe tener al menos 8 caracteres",
               },
-              validate: (value) =>
-                value === watchPassword || "Las contraseñas no coinciden",
+              validate: (value, formValues) =>
+                value === formValues.password ||
+                "Las contraseñas no coinciden",
             })}
           />
           {errors.password_confirmation && (
