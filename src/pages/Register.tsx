@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import Error from "@/components/Error";
 import type { RegisterForm } from "@/types/user";
@@ -21,11 +21,13 @@ export default function Register() {
 
   const {
     register,
+    control,
     reset,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<RegisterForm>({ defaultValues: initialValues });
 
+  const watchPassword = useWatch({ control, name: "password" });
   const onSubmit = async (formData: RegisterForm) => {
     try {
       await registerAccount(formData);
@@ -39,10 +41,7 @@ export default function Register() {
 
   return (
     <div className="mx-auto w-full max-w-md px-4">
-      <Link
-        to="/"
-        className="mb-8 text-sm text-slate-500 hover:text-slate-300"
-      >
+      <Link to="/" className="mb-8 text-sm text-slate-500 hover:text-slate-300">
         ← Volver al inicio
       </Link>
       <h1 className="text-2xl font-semibold tracking-tight">Crear cuenta</h1>
@@ -66,9 +65,7 @@ export default function Register() {
             className={inputClassName}
             {...register("name", { required: "El nombre es obligatorio" })}
           />
-          {errors.name && (
-            <Error>{errors.name.message?.toString()}</Error>
-          )}
+          {errors.name && <Error>{errors.name.message?.toString()}</Error>}
         </div>
 
         <div className="flex flex-col gap-1.5">
@@ -89,9 +86,7 @@ export default function Register() {
               },
             })}
           />
-          {errors.email && (
-            <Error>{errors.email.message?.toString()}</Error>
-          )}
+          {errors.email && <Error>{errors.email.message?.toString()}</Error>}
         </div>
 
         <div className="flex flex-col gap-1.5">
@@ -136,9 +131,8 @@ export default function Register() {
                 value: 8,
                 message: "La contraseña debe tener al menos 8 caracteres",
               },
-              validate: (value, formValues) =>
-                value === formValues.password ||
-                "Las contraseñas no coinciden",
+              validate: (value) =>
+                value === watchPassword || "Las contraseñas no coinciden",
             })}
           />
           {errors.password_confirmation && (
