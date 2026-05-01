@@ -1,15 +1,10 @@
-export type User = {
-  name: string;
-  email: string;
-  _id: string;
-  description: string;
-};
+import type z from "zod";
+import type {
+  loginFormSchema,
+  registerFormSchema,
+  userSchema,
+} from "@/schemas/User";
 
-export type RegisterForm = Pick<User, "name" | "email"> & {
-  password: string;
-  password_confirmation: string;
-};
-
-export type LoginForm = Pick<User, "email"> & {
-  password: string;
-};
+export type RegisterForm = z.infer<typeof registerFormSchema>;
+export type User = z.infer<typeof userSchema>;
+export type LoginForm = z.infer<typeof loginFormSchema>;

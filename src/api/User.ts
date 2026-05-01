@@ -1,5 +1,9 @@
 import api from "@/config/axios";
-import { loginFormSchema, userSchema } from "@/schemas/User";
+import {
+  loginFormSchema,
+  registerFormSchema,
+  userSchema,
+} from "@/schemas/User";
 import type { LoginForm, RegisterForm, User } from "@/types/user";
 
 /** POST /auth/login */
@@ -11,6 +15,7 @@ export async function loginUser(body: LoginForm): Promise<User> {
 
 /** POST /auth/register */
 export async function registerUser(body: RegisterForm): Promise<User> {
-  const { data } = await api.post<unknown>("/auth/register", body);
+  const payload = registerFormSchema.parse(body);
+  const { data } = await api.post<unknown>("/auth/register", payload);
   return userSchema.parse(data);
 }
